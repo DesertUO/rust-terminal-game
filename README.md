@@ -2,7 +2,6 @@
 
 A simple rust-based game that runs in the terminal,
 I recommend using a monospace nerdfont for it to not look weird
-and a terminal that supports modern unicode characters
 
 Here may go a screenshot of it running...
 
