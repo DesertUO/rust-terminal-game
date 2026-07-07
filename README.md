@@ -9,7 +9,7 @@ Here may go a screenshot of it running...
 *For the moment is just a simple renderer that shows a counter and a box*
 
 ## Dependencies
-    Relies on crossterm for input and rendering support
+Relies on crossterm for input and rendering support
 
 ## *Work In Progress~*
 
