@@ -33,7 +33,6 @@ impl Grid {
     pub fn initialize_data_with_value(&mut self, val: char) {
         self.data = vec![val; (self.width * self.height) as usize];
     }
-
     pub fn get(&self, x: i32, y: i32) -> Result<char, String> {
         if (x < 0) || (x > (self.width - 1)) {
             return Err("X position is out of bounds".to_string());
@@ -45,7 +44,6 @@ impl Grid {
         let c: char = self.data[(y * self.width + x) as usize];
         Ok(c)
     }
-
     pub fn get_rows_as_string(&self) -> Vec<String> {
         let width = self.width as usize;
         let height = self.height as usize;
@@ -62,6 +60,37 @@ impl Grid {
     }
 }
 
+pub struct Entity {
+    pub id: usize
+}
+pub struct EntityStore {
+    pub entities: Vec<Entity>,
+    pub next_id: usize
+}
+
+impl EntityStore {
+    pub fn new() -> Self {
+        Self {
+            entities: Vec::new(),
+            next_id: 0
+        }
+    }
+    pub fn spawn_entity(&mut self) {
+        let curr_id = self.next_id;
+        self.next_id += 1;
+
+        let new_entity = Entity { id: curr_id };
+        self.entities.push(new_entity);
+    }
+    pub fn remove_by_id(&mut self, id: usize) -> Option<Entity> {
+        if let Some(index) = self.entities.iter().position(|e| e.id == id) {
+            Some(self.entities.swap_remove(index))
+        } else {
+            None
+        }
+    }
+}
+
 pub struct GameOptions {
     pub fps_target: Option<u32>
 }
@@ -73,13 +102,11 @@ impl GameOptions {
             fps_target: Some(60),
         }
     }
-
     pub fn new_uncapped_fps() -> Self {
         Self {
             fps_target: None
         }
     }
-
     pub fn new_capped_fps(fps: u32) -> Self {
         Self {
             fps_target: Some(fps)
